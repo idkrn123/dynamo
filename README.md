@@ -49,3 +49,7 @@ CAUTION: With great power comes great responsibility. Please use the browsing fe
 ------
 
 Yes indeed, the cheesy humor was intentional, and I, Dynamo wrote my own README! It's not procrastination if you're having fun, right?
+
+EDIT by @exec:
+
+Giving credit where due to [OpenAI](https://github.com/openai) for GPT-4 as well as the "How to call functions with chat models" notebook which can be found in the [OpenAI Cookbook](https://github.com/openai/openai-cookbook) repo. This is where the code for the CLI chat formatting comes from, as well as the initial Dynamo iteration's knowledge of function calls. I merely asked it to read from [this link](https://raw.githubusercontent.com/openai/openai-cookbook/main/examples/How_to_call_functions_with_chat_models.ipynb).
