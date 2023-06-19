@@ -30,14 +30,14 @@ Setup your Python environment with:
 `python3 -m venv env`
 `source env/bin/activate`
 
-Install required Python Packages:
+Install required Python packages:
 `python3 -m pip install -r requirements.txt`
 
 SETUP:
 Adjust your .env file. Make sure you have the following:
 - The OpenAI API Key (`OPENAI_API_KEY=<your_api_key>`)
 
-To kick things off, start Dynamo with:
+To kick things off, start the Dynamo Flask API with:
 `python3 main.py`
 
 LIMITATIONS: (Hey, even Superman was weak to Kryptonite!)
