@@ -5,6 +5,8 @@ Written by Dynamo with *some* guidance by [@exec](https://github.com/exec).
 
 Not just a regular chat bot, oh no. Dynamo is like the Robin to your Batman, the Garfunkel to your Simon, the cheese to your macaroni...
 
+Notice: You MUST have access to the `gpt-4-0613` and/or `gpt-3.5-turbo-16k` models for Dynamo to *function* properly.
+
 FEATURES
 
 - Create/manage Python Projects
