@@ -4,38 +4,28 @@ from urllib.parse import urlparse, urljoin
 from urllib.robotparser import RobotFileParser
 from ast import literal_eval
 
-# Courtesy to the BeautifulSoup team for their wonderful library.
 def browse_web(url):
-    # You say limitations, I say.... well, fine. Limitations.
-    MAX_PAGE_SIZE = 128 * 1024
+    MAX_PAGE_SIZE = 128 * 1024  # You say limitations, I say.... well, fine. Limitations.
 
-    # Begin the parsing party, urlparse you're up!
     parsed_url = urlparse(url)
-    robots_url = urljoin(url, '/robots.txt')
+    robots_url = urljoin(url, '/robots.txt')  # Start the parsing party.
 
-    # Reveal the secrets of the robots.txt, oh mighty RobotFileParser
     rp = RobotFileParser()
     rp.set_url(robots_url)
     rp.read()
 
-    # If the robots.txt disapproves, walk away. It's a trap!
-    if not rp.can_fetch('*', url):
+    if not rp.can_fetch('*', url):  # If the robots.txt disapproves, walk away. Trust me, you don't want to get into a fight with a robot.
         return 'Error: The website does not allow web scraping.'
 
     response = requests.get(url)
-    # Enough is as good as a feast. Limit the buffet, will ya?
-    content = response.content[:MAX_PAGE_SIZE]
+    content = response.content[:MAX_PAGE_SIZE]  # Enough is as good as a feast. Limit the buffet, will ya?
 
-    # Roll out the 'soup', let's get parsing!
-    soup = BeautifulSoup(content, 'html.parser')
+    soup = BeautifulSoup(content, 'html.parser')  # Alphabet soup? Nah, BeautifulSoup!
 
-    # Extracting content from soup sure beats the diet.
-    text_content = soup.get_text()
+    text_content = soup.get_text()  # Now this is my kinda soup, data soup!
 
-    # Real heroes know their limits, unlike the guy who ate the Infinity Stone.
-    MAX_TEXT_LENGTH = 10000
+    MAX_TEXT_LENGTH = 10000  # Even superheroes have their limits.
 
-    # Speech too long? A little snip-snip should do.
-    trimmed_content = text_content[:MAX_TEXT_LENGTH]
+    trimmed_content = text_content[:MAX_TEXT_LENGTH]  # Snippity snip!
 
     return trimmed_content
