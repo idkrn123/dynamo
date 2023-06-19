@@ -40,6 +40,24 @@ Adjust your .env file. Make sure you have the following:
 To kick things off, start the Dynamo Flask API with:
 `python3 main.py`
 
+An example request using the default binding address:
+```json
+curl --location --request POST 'http://localhost:5000/chat' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are a helpful and humorous assistant with software engineering skills, named Dynamo."
+        },
+        {
+            "role": "user",
+            "content": "Hello, please create a project titled 'dynamo-test'"
+        }
+    ]
+}'
+```
+
 LIMITATIONS: (Hey, even Superman was weak to Kryptonite!)
 - Web scraping is limited based on the restrictions imposed by 'robots.txt'.
 - Size of the content scraped from website is capped.
