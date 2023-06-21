@@ -54,7 +54,8 @@ curl --location --request POST 'http://localhost:5000/chat' \
             "role": "user",
             "content": "Hello, please create a project titled 'dynamo-test'"
         }
-    ]
+    ],
+    "model": "gpt-4-0613"
 }'
 ```
 
