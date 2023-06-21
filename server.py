@@ -141,12 +141,12 @@ functions = [
                     "type": "string",
                     "description": "The name of the project",
                 },
-                "subdir_name": {
+                "dirname": {
                     "type": "string",
                     "description": "The name of the subdirectory to create",
                 },
             },
-            "required": ["project_name", "subdir_name"],
+            "required": ["project_name", "dirname"],
         },
     },
     {
@@ -159,12 +159,12 @@ functions = [
                     "type": "string",
                     "description": "The name of the project",
                 },
-                "subdir_name": {
+                "dirname": {
                     "type": "string",
                     "description": "The name of the subdirectory to delete",
                 },
             },
-            "required": ["project_name", "subdir_name"],
+            "required": ["project_name", "dirname"],
         },
     },
     {
@@ -177,16 +177,16 @@ functions = [
                     "type": "string",
                     "description": "The name of the project",
                 },
-                "old_subdir_name": {
+                "old_dirname": {
                     "type": "string",
                     "description": "The existing name of the subdirectory",
                 },
-                "new_subdir_name": {
+                "new_dirname": {
                     "type": "string",
                     "description": "The new name of the subdirectory",
                 },
             },
-            "required": ["project_name", "old_subdir_name", "new_subdir_name"],
+            "required": ["project_name", "old_dirname", "new_dirname"],
         },
     }
 ]
