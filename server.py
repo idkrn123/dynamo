@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from requests_handler import chat_completion_request
-from file_manager import FUNCTION_MAP, delete_file, rename_file
+from file_manager import delete_file, rename_file
 from web_scraper import browse_web
 from ast import literal_eval
 
@@ -25,7 +25,7 @@ functions = [
     },
     {
         "name": "list_files",
-        "description": "List the files in a specified project directory",
+        "description": "List the files and subdirectories in a specified project directory",
         "parameters": {
             "type": "object",
             "properties": {
@@ -131,7 +131,79 @@ functions = [
             "required": ["project_name", "old_filename", "new_filename"],
         },
     },
+    {
+        "name": "create_subdir",
+        "description": "Create a new subdirectory in a specified project",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "project_name": {
+                    "type": "string",
+                    "description": "The name of the project",
+                },
+                "subdir_name": {
+                    "type": "string",
+                    "description": "The name of the subdirectory to create",
+                },
+            },
+            "required": ["project_name", "subdir_name"],
+        },
+    }
+    {
+        "name": "delete_subdir",
+        "description": "Delete a specified subdirectory in a project",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "project_name": {
+                    "type": "string",
+                    "description": "The name of the project",
+                },
+                "subdir_name": {
+                    "type": "string",
+                    "description": "The name of the subdirectory to delete",
+                },
+            },
+            "required": ["project_name", "subdir_name"],
+        },
+    }
+    {
+        "name": "rename_subdir",
+        "description": "Rename a specified subdirectory in a project",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "project_name": {
+                    "type": "string",
+                    "description": "The name of the project",
+                },
+                "old_subdir_name": {
+                    "type": "string",
+                    "description": "The existing name of the subdirectory",
+                },
+                "new_subdir_name": {
+                    "type": "string",
+                    "description": "The new name of the subdirectory",
+                },
+            },
+            "required": ["project_name", "old_subdir_name", "new_subdir_name"],
+        },
+    }
 ]
+
+# Mapping function names to function objects
+FUNCTION_MAP = {
+    'create_project': create_project,
+    'create_subdir': create_subdir,
+    'delete_subdir': delete_subdir,
+    'rename_subdir': rename_subdir,
+    'list_files': list_files,
+    'delete_file': delete_file,
+    'read_file': read_file,
+    'write_file': write_file,
+    'rename_file': rename_file,
+    'browse_web': browse_web
+}
 
 @app.route('/chat', methods=['POST'])
 def chat():
