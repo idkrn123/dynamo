@@ -148,7 +148,7 @@ functions = [
             },
             "required": ["project_name", "subdir_name"],
         },
-    }
+    },
     {
         "name": "delete_subdir",
         "description": "Delete a specified subdirectory in a project",
@@ -166,7 +166,7 @@ functions = [
             },
             "required": ["project_name", "subdir_name"],
         },
-    }
+    },
     {
         "name": "rename_subdir",
         "description": "Rename a specified subdirectory in a project",
