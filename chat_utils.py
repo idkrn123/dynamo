@@ -9,16 +9,14 @@ load_dotenv()
 # Holler! Here's your key. Don't lose it.
 openai_api_key = os.getenv('OPENAI_API_KEY')
 
-# No secret password to the bat-cave, just plain old model name
-GPT_MODEL = "gpt-4-0613"
-
 @retry(wait=wait_random_exponential(min=1, max=40), stop=stop_after_attempt(3))
-def chat_completion_request(messages, functions=None, function_call=None, model=GPT_MODEL):
+def chat_completion_request(messages, model, functions=None, function_call=None):
     # Prepare for headers, folks!
     headers = {
         "Content-Type": "application/json",
         "Authorization": "Bearer " + openai_api_key,
     }
+
     # Presenting... json-ly data! (I promise it's not just corn syrup)
     json_data = {"model": model, "messages": messages, "max_tokens": 2048}
 
