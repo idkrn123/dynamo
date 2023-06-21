@@ -13,13 +13,6 @@ FEATURES
 - Populate with new python files
 - Structured according to Python standards
 
-COMPONENTS:
-
-1. chat_utils.py: This is the 'Communication Manager'. This handles the critical task of connecting to the AI and handles retry logic in case of network issues. Also, it comes with a 'conversation pretty-printer'.
-2. file_manager.py: This 'File Manager' is an enthusiast. Loves to deal with Projects and Files. Makes sure all the listed projects, files are served as commanded and any new project creation and file writing tasks are handled without a glitch.
-3. server.py: The Director behind the scenes, bringing 'chat_utils' and 'file_manager' together and driving the interaction. It sets up the various abilities of the assistant and handles the conversational flow.
-4. web_scraper.py: Your very own neighborhood Spiderman...or 'Web-scraper'. Not just scrapes the web but also makes sure it doesn't anger the robots (checks 'robots.txt').
-
 INSTALLATION:
 Here's how to kickstart your adventure with Dynamo:
 
