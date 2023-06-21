@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from requests_handler import chat_completion_request
-from file_manager import delete_file, rename_file
+from file_manager import delete_file, rename_file, rename_subdir, list_files, read_file, write_file
 from web_scraper import browse_web
 from ast import literal_eval
 

@@ -30,9 +30,6 @@ def rename_subdir(project_name, old_dirname, new_dirname):
     os.rename(project_path, new_project_path)
     return f"Successfully renamed subdirectory '{old_dirname}' to '{new_dirname}' in project '{project_name}'"
 
-def list_projects():
-    return "\n".join(os.listdir("projects"))
-
 def list_files(project_name):
     project_path = os.path.join("projects", project_name)
     if not os.path.exists(project_path):
