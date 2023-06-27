@@ -9,9 +9,9 @@ Notice: You MUST have access to the `gpt-4-0613` and/or `gpt-3.5-turbo-16k` mode
 
 FEATURES
 
-- Create/manage Python Projects
-- Populate with new python files
-- Structured according to Python standards
+- Create/manage Project Directories
+- File Management
+- Web Browsing (visiting URLs only currently!)
 
 INSTALLATION:
 Here's how to kickstart your adventure with Dynamo:
