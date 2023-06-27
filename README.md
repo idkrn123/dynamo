@@ -9,7 +9,7 @@ Notice: You MUST have access to the `gpt-4-0613` and/or `gpt-3.5-turbo-16k` mode
 
 FEATURES
 
-- Create/manage Project Directories
+- Create/Manage Project Directories
 - File Management
 - Web Browsing (visiting URLs only currently!)
 
