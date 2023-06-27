@@ -51,6 +51,7 @@ curl --location --request POST 'http://localhost:5000/chat' \
     "model": "gpt-4-0613"
 }'
 ```
+You can also use the web client included in the `client/` directory. It will be updated to look less... unfortunate... soon.
 
 LIMITATIONS: (Hey, even Superman was weak to Kryptonite!)
 - Web scraping is limited based on the restrictions imposed by 'robots.txt'.
