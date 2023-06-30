@@ -1,5 +1,5 @@
 # Dynamo
-Dynamo - your friendly Assistant with a knack for brevity, perfect for helping you with your Python coding projects.
+Dynamo - your friendly OpenAI-powered Assistant with a knack for brevity, perfect for helping you with your projects.
 
 Written by Dynamo with *some* guidance by [@exec](https://github.com/exec).
 
@@ -9,9 +9,10 @@ Notice: You MUST have access to the `gpt-4-0613` and/or `gpt-3.5-turbo-16k` mode
 
 FEATURES
 
-- Create/Manage Project Directories
-- File Management
-- Web Browsing (visiting URLs only currently!)
+- Create/manage project directories and files
+- Viewing of webpages with Beautiful Soup
+- **Coming soon**: Create/restore versioned backups of generated projects
+- **Coming soon**: Interface with Git using GitPython
 
 INSTALLATION:
 Here's how to kickstart your adventure with Dynamo:
