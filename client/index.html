@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang='en'>
-<head>
-<meta charset='UTF-8'>
-<title>Dynamo Frontend</title>
-<link rel='stylesheet' href='style.css'>
-</head>
-<body>
-<main class='chat-container'>
-<section id='chat-output'></section>
-<form id='chat-form' onsubmit='event.preventDefault(); sendMessage();'>
-<input type='text' id='user-input' placeholder='Type your message here...' autocomplete='off'>
-<button type='submit'>Send</button>
-</form>
-</main>
-<script src='script.js'></script>
-</body>
+    <head>
+        <meta charset='UTF-8'>
+        <title>Dynamo</title>
+        <link rel='stylesheet' href='style.css'>
+    </head>
+    <body>
+        <div class='container'>
+            <main class='chat-app'>
+                <section id='chat-output'></section>
+            </main>
+            <footer>
+                <form id='chat-form' onsubmit='event.preventDefault(); sendMessage();'>
+                    <textarea id='user-input' placeholder='Type your message here...' autocomplete='off' rows='5'></textarea>
+                    <button id='send-button' type='submit'>Send</button>
+                </form>
+            </footer>
+            <script src='scripts.js'></script>
+        </div>
+    </body>
 </html>

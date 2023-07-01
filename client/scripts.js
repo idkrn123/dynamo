@@ -48,11 +48,15 @@ const sendPostRequest = async () => {
 
 // Print a message
 function printMessage(cssClass, message) {
+    var messageWrapper = document.createElement('div');
+    messageWrapper.className = `message-wrapper ${cssClass === 'user-message' ? 'user' : 'assistant'}`;
+
     var messageElem = document.createElement('div');
     messageElem.className = `${cssClass} message`;
     messageElem.innerText = message;
 
-    chatOutput.appendChild(messageElem);
+    messageWrapper.appendChild(messageElem);
+    chatOutput.appendChild(messageWrapper);
 }
 
 // Bind the send message to form submit
