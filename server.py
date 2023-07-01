@@ -212,8 +212,12 @@ def chat():
         return jsonify({'error': 'Missing messages parameter'}), 400
     messages = data['messages']
 
+    if 'messages' not in data:
+        return jsonify({'error': 'Missing model parameter'}), 400
+    model = data['model']
+
     while True:
-        response = chat_completion_request(messages, functions=functions)
+        response = chat_completion_request(messages=messages, model=model, functions=functions)
         response_json = response.json()
         try:
             assistant_message = response_json['choices'][0]['message']
