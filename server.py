@@ -212,7 +212,7 @@ def chat():
         return jsonify({'error': 'Missing messages parameter'}), 400
     messages = data['messages']
 
-    if 'messages' not in data:
+    if 'model' not in data:
         return jsonify({'error': 'Missing model parameter'}), 400
     model = data['model']
 
