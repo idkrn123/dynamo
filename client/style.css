@@ -42,6 +42,11 @@ body {
     color: black;
 }
 
+.function-message {
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+}
+
 .message-wrapper.user {
     display: flex;
     justify-content: flex-end;
@@ -50,6 +55,11 @@ body {
 .message-wrapper.assistant {
     display: flex;
     justify-content: flex-start;
+}
+
+.message-wrapper.function {
+    display: flex;
+    justify-content: center;
 }
 
 #chat-form {
@@ -61,6 +71,10 @@ body {
     box-shadow: 0px -2px 10px 0px rgba(0, 0, 0, 0.15);
     margin: 0 auto;
     text-align: center;
+}
+
+#chat-output {
+    padding-bottom: 150px;
 }
 
 #user-input {

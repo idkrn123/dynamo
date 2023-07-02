@@ -15,7 +15,7 @@ def browse_web(url):
     rp.read()
 
     if not rp.can_fetch('*', url):  # If the robots.txt disapproves, walk away. Trust me, you don't want to get into a fight with a robot.
-        return 'Error: The website does not allow web scraping.'
+        return 'Error: does not allow web scraping: ' + url
 
     response = requests.get(url)
     content = response.content[:MAX_PAGE_SIZE]  # Enough is as good as a feast. Limit the buffet, will ya?
@@ -28,4 +28,4 @@ def browse_web(url):
 
     trimmed_content = text_content[:MAX_TEXT_LENGTH]  # Snippity snip!
 
-    return trimmed_content
+    return f"browse_web('{url}'): " + trimmed_content.strip()

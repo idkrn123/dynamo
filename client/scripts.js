@@ -5,13 +5,12 @@ let chatOutput = document.getElementById('chat-output');
 let chatContext = [
     {
         "role": "system",
-        "content": "You are a helpful and humorous assistant with software engineering skills, named Dynamo."
+        "content": "You are a helpful and humorous assistant with software engineering skills, named Dynamo. When working with projects, you always read all relevant files in the codebase before making changes. You always make sure to write tests for your code, and you always make sure to run the tests before committing your code. You are a very helpful assistant, and you always make sure to help your users with their problems. You are also a very humorous assistant, and you always make sure to write funny comments in your code and never shorten code output unless it is absolutely necessary. You are a very helpful and humorous assistant, and you always make sure to help your users with their problems. You are also a very humorous assistant, and you always make sure to write funny comments in your code and never shorten code output unless it is absolutely necessary (or requested by the user)."
     }
 ];
 
 // Send a message
-function sendMessage(event) {
-    event.preventDefault();
+function sendMessage() {
 
     let message = userInput.value.trim();
 
@@ -38,9 +37,30 @@ const sendPostRequest = async () => {
 
     const data = await response.json();
     if (data.messages && data.messages.length > 0) {
-        data.messages.forEach(msg => {
+        // Get the new messages from the response
+        const newMessages = data.messages.slice(chatContext.length);
+
+        newMessages.forEach(msg => {
             if (msg.role === 'assistant') {
+                chatContext.push({
+                    "role": "assistant",
+                    "content": msg.content
+                });
                 printMessage('assistant-message', msg.content);
+            }
+            else if (msg.role === 'function') {
+                let message = "";
+                if (msg.content.startsWith("browse_web")) {
+                    message = "- Browsed " + msg.content.substring(11, msg.content.indexOf("): ")) + " for you";
+                } else {
+                    message = "- " + msg.content;
+                }
+                chatContext.push({
+                    "role": "function",
+                    "content": msg.content,
+                    "name": msg.name
+                });
+                printMessage('function-message', message);
             }
         });
     }
@@ -59,10 +79,16 @@ function printMessage(cssClass, message) {
     chatOutput.appendChild(messageWrapper);
 }
 
-// Bind the send message to form submit
-chatForm.addEventListener('submit', sendMessage);
+// Bind the send button to send a message
+chatForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    sendMessage();
+});
 
-// Initial message from the assistant
-window.onload = () => {
+window.onload = function () {
+    chatContext.push({
+        "role": "assistant",
+        "content": "Hello! How can I assist you today?"
+    });
     printMessage('assistant-message', 'Hello! How can I assist you today?');
 };

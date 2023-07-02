@@ -1,5 +1,4 @@
 import os
-from web_scraper import browse_web
 
 def create_project(project_name):
     project_path = os.path.join("projects", project_name)

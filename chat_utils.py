@@ -2,7 +2,6 @@ import os
 import requests
 from tenacity import retry, wait_random_exponential, stop_after_attempt
 from dotenv import load_dotenv
-from ast import literal_eval
 
 load_dotenv()
 
