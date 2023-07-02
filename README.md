@@ -77,7 +77,7 @@ This request will return all `messages` with the new messages at the end:
 }
 ```
 
-You can also use the web client included in the `client/` directory. It will be updated to include more features soon; however, it will never include user authentication, billing, etc. as that is outside of the scope of this project (for now, at least!)
+You can also use the web client included in the `client/` directory. It will be updated to include more features soon.
 
 TODO:
 - GitPython function calls
