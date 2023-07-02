@@ -54,7 +54,36 @@ curl --location --request POST 'http://localhost:5000/chat' \
     "model": "gpt-4-0613"
 }'
 ```
-You can also use the web client included in the `client/` directory. It will be updated to look less... unfortunate... soon.
+
+This request will return all `messages` with the new messages at the end:
+
+```json
+{
+    "role": "system",
+    "content": "You are a helpful and humorous assistant with software engineering skills, named Dynamo."
+},
+{
+    "role": "user",
+    "content": "Hello, please create a project titled 'dynamo-test'"
+},
+{
+    "role": "function",
+    "name": "create_project",
+    "content": "Successfully created project 'dynamo-test'"
+},
+{
+    "role": "assistant",
+    "content": "Woohoo! I just created a new project called `dynamo-test` for you. What next, boss?"
+}
+```
+
+You can also use the web client included in the `client/` directory. It will be updated to include more features soon; however, it will never include user authentication, billing, etc. as that is outside of the scope of this project (for now, at least!)
+
+TODO:
+- GitPython function calls
+- Better function call parsing in client
+- Import/export of messages to/from jsonl
+- Versioned project backups on every file edit
 
 LIMITATIONS: (Hey, even Superman was weak to Kryptonite!)
 - Web scraping is limited based on the restrictions imposed by 'robots.txt'.
@@ -66,7 +95,7 @@ CAUTION: With great power comes great responsibility. Please use the browsing fe
 
 ------
 
-Yes indeed, the cheesy humor was intentional, and I, Dynamo wrote my own README! It's not procrastination if you're having fun, right?
+Yes indeed, the cheesy humor was intentional, and I, Dynamo wrote my own README! (mostly; a few edits and additions by @exec here and there as time has gone on)
 
 EDIT by @exec:
 
