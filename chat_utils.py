@@ -30,6 +30,9 @@ def chat_completion_request(messages, model, functions=None, function_call=None)
             headers=headers,
             json=json_data,
         )
+        # print token usage to console
+        usage = str(response.json()["usage"])
+        print(f"OpenAI call made - usage: {usage}")
         return response
     except requests.exceptions.RequestException as e:
         print("Unable to generate ChatCompletion response due to a network problem.")
