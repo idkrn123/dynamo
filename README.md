@@ -13,8 +13,7 @@ FEATURES
 
 - Create/manage project directories and files
 - Viewing of webpages with Beautiful Soup
-- **Coming soon**: Create/restore versioned backups of generated projects
-- **Coming soon**: Interface with Git using GitPython
+- Management of GitHub repositories
 
 INSTALLATION:
 Here's how to kickstart your adventure with Dynamo:
@@ -80,10 +79,8 @@ This request will return all `messages` with the new messages at the end:
 You can also use the web client included in the `client/` directory. It will be updated to include more features soon.
 
 TODO:
-- GitPython function calls
 - Better function call parsing in client
 - Import/export of messages to/from jsonl
-- Versioned project backups on every file edit
 
 LIMITATIONS: (Hey, even Superman was weak to Kryptonite!)
 - Web scraping is limited based on the restrictions imposed by 'robots.txt'.
