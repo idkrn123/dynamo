@@ -5,3 +5,4 @@ dotenv
 bs4
 flask
 jsonpath_ng
+pygithub
