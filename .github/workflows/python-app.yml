@@ -35,6 +35,10 @@ jobs:
       run: |
         python server.py &
         sleep 3  # Give Flask some time to start
-    - name: Test with pytest
+    - name: Test API with curl
       run: |
-        pytest
+        response=$(curl --write-out '%{http_code}' --silent --output /dev/null http://localhost:5000 -d "invalid_data")
+          if [ "$response" -ne 400 ]; then
+            echo "Expected HTTP status code 400, but got $response"
+            exit 1
+          fi
