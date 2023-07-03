@@ -31,6 +31,7 @@ Install required Python packages:
 SETUP:
 Adjust your .env file. Make sure you have the following:
 - The OpenAI API Key (`OPENAI_API_KEY=<your_api_key>`)
+- The GitHub OAuth Token (`GITHUB_ACCESS_TOKEN=<your_token>`)
 
 To kick things off, start the Dynamo Flask API with:
 `python3 server.py`
