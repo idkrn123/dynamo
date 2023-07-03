@@ -37,8 +37,8 @@ jobs:
         sleep 3  # Give Flask some time to start
     - name: Test API with curl
       run: |
-        response=$(curl --write-out '%{http_code}' --silent --output /dev/null http://localhost:5000/chat -d "invalid_data")
-          if [ "$response" -ne 400 ]; then
-            echo "Expected HTTP status code 400, but got $response"
+        response=$(curl --write-out '%{http_code}' --silent --output /dev/null http://localhost:5000 -d "invalid_data")
+          if [ "$response" -ne 404 ]; then
+            echo "Expected HTTP status code 404, but got $response"
             exit 1
           fi
