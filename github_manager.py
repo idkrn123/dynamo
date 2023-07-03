@@ -1,6 +1,12 @@
-from github import Github, GithubException
+import os
 
-g = Github("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")  # replace with your GitHub access token
+from github import Github, GithubException
+# handle dotenv for environment variables - github access token
+from dotenv import load_dotenv
+load_dotenv()
+
+# create github object
+g = Github(os.getenv("GITHUB_ACCESS_TOKEN")) 
 
 def create_repo(repo_name):
     user = g.get_user()
