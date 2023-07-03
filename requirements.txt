@@ -4,5 +4,6 @@ openai
 python-dotenv
 bs4
 flask
+flask-cors
 jsonpath_ng
 pygithub
