@@ -1,2 +1,5 @@
 __pycache__
 .env
+apikey.txt
+chat.sh
+token.txt

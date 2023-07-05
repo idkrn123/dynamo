@@ -23,7 +23,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 pytest
+        pip install flake8 pytest requests
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
@@ -35,10 +35,6 @@ jobs:
       run: |
         python server.py &
         sleep 3  # Give Flask some time to start
-    - name: Test API with curl
+    - name: Run tests with pytest
       run: |
-        response=$(curl --write-out '%{http_code}' --silent --output /dev/null http://localhost:5000 -d "invalid_data")
-          if [ "$response" -ne 404 ]; then
-            echo "Expected HTTP status code 404, but got $response"
-            exit 1
-          fi
+        pytest testing/
