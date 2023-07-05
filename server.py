@@ -45,9 +45,6 @@ def chat():
     if not key:
         return jsonify({'error': 'Invalid API key'}), 401
 
-    if not charge_user(key.user_id, 0.01):
-        return jsonify({'error': 'Insufficient balance'}), 402
-
     data = request.get_json()
     if 'messages' not in data:
         return jsonify({'error': 'Missing messages parameter'}), 400
@@ -96,6 +93,10 @@ def chat():
         else:
             messages.append(assistant_message)
             break
+
+        if not charge_user(key.user_id, 0.01):
+        return jsonify({'error': 'Insufficient balance'}), 402
+        
     return jsonify({'messages': messages}), 200
 
 if __name__ == '__main__':
