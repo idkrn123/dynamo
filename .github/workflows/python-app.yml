@@ -33,8 +33,10 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Run Flask API server
       run: |
-        python server.py &
+        python -m dynamo.server &
         sleep 3  # Give Flask some time to start
+      working-directory: ..
     - name: Run tests with pytest
       run: |
         pytest testing/
+      working-directory: ..
