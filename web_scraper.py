@@ -28,4 +28,4 @@ def browse_web(url):
 
     trimmed_content = text_content[:MAX_TEXT_LENGTH]  # Snippity snip!
 
-    return f"browse_web('{url}'): " + trimmed_content.strip()
+    return trimmed_content.strip()  # Trim the fat, and return the content.

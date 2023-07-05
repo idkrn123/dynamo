@@ -54,7 +54,7 @@ def read_file(repo_name, filename, branch="main"):
     try:
         repo = user.get_repo(repo_name)
         contents = repo.get_contents(filename, ref=branch)
-        return contents.decoded_content.decode()  # decode bytes to string
+        return f"read_file({repo_name} branch {branch}): \n" + contents.decoded_content.decode()
     except GithubException as e:
         return str(e)
 
@@ -90,7 +90,7 @@ def list_branches(repo_name):
         if repo_name not in [repo.name for repo in user.get_repos()]:
             return f"Error: Repository '{repo_name}' does not exist."
         repo = user.get_repo(repo_name)
-        return [branch.name for branch in repo.get_branches()]
+        return str([branch.name for branch in repo.get_branches()])
     except GithubException as e:
         return str(e)
 
