@@ -1,5 +1,6 @@
 let chatForm = document.getElementById('chat-form');
 let userInput = document.getElementById('user-input');
+let functionInput = document.getElementById('command-select');
 let chatOutput = document.getElementById('chat-output');
 
 let chatContext = [
@@ -9,35 +10,32 @@ let chatContext = [
     }
 ];
 
-// Send a message
 function sendMessage() {
-
     let message = userInput.value.trim();
-
+    let functions = Array.from(functionInput.selectedOptions).map(option => ({name: option.value, args: []}));
     if (message !== '') {
         printMessage('user-message', message);
         chatContext.push({
             "role": "user",
             "content": message
         });
-        sendPostRequest();
+        sendPostRequest(functions);
     }
 
     userInput.value = '';
 }
 
-const sendPostRequest = async () => {
+const sendPostRequest = async (functions) => {
     const response = await fetch("http://localhost:5000/chat", {
         method: 'POST',
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ "messages": chatContext, "model": "gpt-4-0613" })
+        body: JSON.stringify({ "messages": chatContext, "model": "gpt-4-0613", "functions": functions })
     });
 
     const data = await response.json();
     if (data.messages && data.messages.length > 0) {
-        // Get the new messages from the response
         const newMessages = data.messages.slice(chatContext.length);
 
         newMessages.forEach(msg => {
@@ -66,7 +64,6 @@ const sendPostRequest = async () => {
     }
 }
 
-// Print a message
 function printMessage(cssClass, message) {
     var messageWrapper = document.createElement('div');
     messageWrapper.className = `message-wrapper ${cssClass === 'user-message' ? 'user' : 'assistant'}`;
@@ -79,11 +76,17 @@ function printMessage(cssClass, message) {
     chatOutput.appendChild(messageWrapper);
 }
 
-// Bind the send button to send a message
 chatForm.addEventListener('submit', function (event) {
     event.preventDefault();
     sendMessage();
 });
+
+function selectAll() {
+    var select = document.getElementById("command-select");
+    for (var i = 0; i < select.options.length; i++) {
+        select.options[i].selected = true;
+    }
+}
 
 window.onload = function () {
     chatContext.push({
@@ -91,4 +94,7 @@ window.onload = function () {
         "content": "Hello! How can I assist you today?"
     });
     printMessage('assistant-message', 'Hello! How can I assist you today?');
+    document.querySelector('a').addEventListener('click', function(e) {
+        e.preventDefault();
+    });
 };

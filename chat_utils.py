@@ -35,10 +35,8 @@ def chat_completion_request(messages, model, functions=None, function_call=None)
         print(f"OpenAI call made - usage: {usage}")
         return response
     except requests.exceptions.RequestException as e:
-        print("Unable to generate ChatCompletion response due to a network problem.")
-        print(f"Exception: {e}")
+        print("Unable to generate ChatCompletion response due to a network problem:" + str(e))
         raise
     except Exception as e:
-        print("Unable to generate ChatCompletion response due to an unknown error.")
-        print(f"Exception: {e}")
+        print("Unable to generate ChatCompletion response due to an unknown error: " + str(e))
         raise

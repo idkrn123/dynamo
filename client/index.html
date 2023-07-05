@@ -14,6 +14,30 @@
                 <form id='chat-form' onsubmit='event.preventDefault(); sendMessage();'>
                     <textarea id='user-input' placeholder='Type your message here...' autocomplete='off' rows='5'></textarea>
                     <button id='send-button' type='submit'>Send</button>
+                    <div id='command-list'>
+                        <p>Functions <a href="#" id="command-select-link" onclick="selectAll()">[Select All]</a></p>
+                        <select id='command-select' multiple>
+                            <option value='browse_web' selected>Browse URLs</option>
+                            <option value='create_repo' selected>Create Repositories</option>
+                            <option value='delete_repo' selected>Delete Repositories</option>
+                            <option value='list_files' selected>List Files</option>
+                            <option value='delete_file' selected>Delete Files</option>
+                            <option value='read_file' selected>Read Files</option>
+                            <option value='write_file' selected>Write Files</option>
+                            <option value='rename_file' selected>Rename Files</option>
+                            <option value='list_branches' selected>List Branches</option>
+                            <option value='get_branch' selected>Get Branches</option>
+                            <option value='list_pull_requests' selected>List Pull Requests</option>
+                            <option value='get_pull_request' selected>Get Pull Request Details</option>
+                            <option value='create_branch' selected>Create Branches</option>
+                            <option value='create_pull_request' selected>Create Pull Requests</option>
+                            <option value='merge_pull_request' selected>Merge Pull Requests</option>
+                            <option value='list_open_issues' selected>List Open Issues</option>
+                            <option value='get_issue' selected>Get Issue Details</option>
+                            <option value='create_issue_comment' selected>Create Issue Comments</option>
+                            <option value='close_issue' selected>Close Issues</option>
+                        </select>
+                    </div>
                 </form>
             </footer>
             <script src='scripts.js'></script>
