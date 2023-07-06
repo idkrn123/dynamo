@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 from flask import current_app
 from flask_sqlalchemy import SQLAlchemy
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -7,7 +8,10 @@ from sqlalchemy_utils.types.encrypted.encrypted_type import AesEngine
 from sqlalchemy import DateTime, func
 import os
 
+load_dotenv()
 db = SQLAlchemy()
+
+print(os.getenv('SECRET_KEY'))
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -2,14 +2,12 @@ import os
 import requests
 from tenacity import retry, wait_random_exponential, stop_after_attempt
 from dotenv import load_dotenv
+from .models import User
 
 load_dotenv()
 
-# OpenAI API key defined in .env file
-openai_api_key = os.getenv('OPENAI_API_KEY')
-
 @retry(wait=wait_random_exponential(min=1, max=40), stop=stop_after_attempt(3))
-def chat_completion_request(messages, model, functions=None):
+def chat_completion_request(messages, model, functions=None, openai_api_key=None):
     headers = {
         "Content-Type": "application/json",
         "Authorization": "Bearer " + openai_api_key,

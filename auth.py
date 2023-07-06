@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify, make_response
+from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 import re
@@ -62,11 +63,22 @@ def store_keys():
     if not user:
         return jsonify({'message': 'Invalid token'}), 401
     if 'openai_api_key' in data:
-        user.openai_api_key = data['openai_api_key']
-        user.openai_api_key_updated_at = datetime.utcnow()
+        # be sure there's actual content, otherwise we leave everything as is
+        # ^sk- is the prefix for OpenAI API keys
+        if not re.match(r'^sk-', data['openai_api_key']):
+            # leave the key as is, but update the timestamp
+            user.openai_api_key_updated_at = datetime.utcnow()
+        else:
+            user.openai_api_key = data['openai_api_key']
+            user.openai_api_key_updated_at = datetime.utcnow()
     if 'github_oauth_token' in data:
-        user.github_oauth_token = data['github_oauth_token']
-        user.github_oauth_token_updated_at = datetime.utcnow()
+        # be sure there's actual content, otherwise we leave everything as is
+        if not re.match(r'^[a-z0-9]+$', data['github_oauth_token']):
+            # leave the key as is, but update the timestamp
+            user.github_oauth_token_updated_at = datetime.utcnow()
+        else:
+            user.github_oauth_token = data['github_oauth_token']
+            user.github_oauth_token_updated_at = datetime.utcnow()
     db.session.commit()
     return jsonify({'message': 'Keys updated successfully'})
 

@@ -7,16 +7,17 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from ast import literal_eval
 from .chat_utils import chat_completion_request
-from .github_manager import *
+from .github_manager import GithubManager
 from .web_scraper import browse_web
 from .models import User, ApiKey, db
 from .auth import auth
-from .billing import charge_user
+from .billing import billing, charge_user, add_money, get_balance
 
 app = Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 app.register_blueprint(auth, url_prefix='/auth')
+app.register_blueprint(billing, url_prefix='/billing')
 db.init_app(app)
 
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
@@ -33,8 +34,16 @@ with open(json_file_path) as json_file:
 
 FUNCTION_MAP = {}
 for function in available_functions:
-    FUNCTION_MAP[function['name']] = globals()[function['name']]
-    print(f"Loaded function {function['name']}")
+    try:
+        FUNCTION_MAP[function['name']] = globals()[function['name']]
+        print(f"Loaded function {function['name']}")
+    except KeyError:
+        if hasattr(GithubManager, function['name']):
+            FUNCTION_MAP[function['name']] = function['name']
+            print(f"Loaded GitHub function {function['name']}")
+        else:
+            print(f"Function {function['name']} not found in server.py or any managers")
+    
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -64,9 +73,26 @@ def chat():
                 return jsonify({'error': f'Function {function_name} not found'}), 404
             functions.append(available_functions_dict[function_name])
 
+    user = User.verify_auth_token(request.headers.get('Authorization'))
+    if not user:
+        return jsonify({'error': 'Invalid token'}), 401
+    # get api key from database
+    if user.openai_api_key:
+        openai_api_key = user.openai_api_key
+    else:
+        return jsonify({'error': 'User has no OpenAI API key'}), 401
+    
+    # we make github oauth token optional
+    if user.github_oauth_token:
+        github_oauth_token = user.github_oauth_token
+    else:
+        github_oauth_token = None
+
+    github_manager = GithubManager(github_oauth_token)
+
     while True:
         if functions:
-            response = chat_completion_request(messages=messages, model=model, functions=functions)
+            response = chat_completion_request(messages=messages, model=model, functions=functions, openai_api_key=openai_api_key)
         else:
             response = chat_completion_request(messages=messages, model=model)
         response_json = response.json()
@@ -83,10 +109,14 @@ def chat():
         if assistant_message.get('function_call'):
             function_name = assistant_message['function_call']['name']
             function_arguments = assistant_message['function_call']['arguments']
-            function = FUNCTION_MAP.get(function_name)
 
-            if not function:
+            if hasattr(github_manager, function_name):
+                function = getattr(github_manager, function_name)
+            elif function_name in FUNCTION_MAP:
+                function = FUNCTION_MAP[function_name]
+            else:
                 return jsonify({'error': f'Function {function_name} not found'}), 404
+
             arguments = literal_eval(function_arguments)
             result = function(**arguments)
             messages.append({'role': 'function', 'name': function_name, 'content': result})
@@ -94,8 +124,9 @@ def chat():
             messages.append(assistant_message)
             break
 
-        if not charge_user(key.user_id, 0.01):
-        return jsonify({'error': 'Insufficient balance'}), 402
+        price = 0.01 * (len(messages) - 1)
+        if not charge_user(key.user_id, price):
+            return jsonify({'error': 'Insufficient balance'}), 402
         
     return jsonify({'messages': messages}), 200
 
