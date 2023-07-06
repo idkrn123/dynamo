@@ -15,5 +15,4 @@ def test_chat():
     headers = {'Content-Type': 'application/json', 'X-API-KEY': apikey, 'Authorization': 'Bearer ' + token}
     data = {'messages': [{'role': 'system', 'content': 'You are a helpful assistant.'}], 'model': 'gpt3'}
     response = requests.post(url, headers=headers, data=json.dumps(data))
-    assert response.status_code == 500
-    assert 'openai-server-error' in response.json()
+    assert response.json()['error'] == 'User has no OpenAI API key'
