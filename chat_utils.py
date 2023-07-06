@@ -1,10 +1,7 @@
 import os
 import requests
 from tenacity import retry, wait_random_exponential, stop_after_attempt
-from dotenv import load_dotenv
 from .models import User
-
-load_dotenv()
 
 @retry(wait=wait_random_exponential(min=1, max=40), stop=stop_after_attempt(3))
 def chat_completion_request(messages, model, functions=None, openai_api_key=None):
