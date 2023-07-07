@@ -77,9 +77,13 @@
             "type": "string",
             "description": "The name of the branch",
             "default": "main"
+          },
+          "msg": {
+            "type": "string",
+            "description": "The commit message"
           }
         },
-        "required": ["repo_name", "filename", "content"]
+        "required": ["repo_name", "filename", "content", "msg"]
       }
     },
     {
@@ -114,9 +118,13 @@
             "type": "string",
             "description": "The name of the branch",
             "default": "main"
+          },
+          "msg": {
+            "type": "string",
+            "description": "The commit message"
           }
         },
-        "required": ["repo_name", "filename"]
+        "required": ["repo_name", "filename", "msg"]
       }
     },
     {
@@ -141,9 +149,13 @@
             "type": "string",
             "description": "The name of the branch",
             "default": "main"
+          },
+          "msg": {
+            "type": "string",
+            "description": "The commit message"
           }
         },
-        "required": ["repo_name", "old_filename", "new_filename"]
+        "required": ["repo_name", "old_filename", "new_filename", "msg"]
       }
     },
     {
@@ -254,6 +266,12 @@
           "repo_name": {
             "type": "string",
             "description": "The name of the repository"
+          },
+          "state": {
+            "type": "string",
+            "description": "The state of the pull requests to list",
+            "default": "open",
+            "enum": ["open", "closed", "all"]
           }
         },
         "required": ["repo_name"]

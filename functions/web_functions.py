@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urljoin
 from urllib.robotparser import RobotFileParser
-from ast import literal_eval
 
 def browse_web(url):
     MAX_PAGE_SIZE = 128 * 1024  # You say limitations, I say.... well, fine. Limitations.
@@ -14,7 +13,7 @@ def browse_web(url):
     rp.set_url(robots_url)
     rp.read()
 
-    if not rp.can_fetch('*', url):  # If the robots.txt disapproves, walk away. Trust me, you don't want to get into a fight with a robot.
+    if not rp.can_fetch('*', parsed_url):  # If the robots.txt disapproves, walk away. Trust me, you don't want to get into a fight with a robot.
         return 'Error: does not allow web scraping: ' + url
 
     response = requests.get(url)

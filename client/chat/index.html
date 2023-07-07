@@ -4,32 +4,38 @@
         <meta charset='UTF-8'>
         <title>Dynamo</title>
         <link rel='stylesheet' href='style.css'>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     </head>
     <body>
         <div class='container'>
             <div id='login-modal' class='modal'>
                 <div class='modal-content'>
-                    <span class='close' id='login-close'>&times;</span>
+                    <h2>Login to Dynamo Chat</h2>
                     <div id='login-form'>
-                        <input id='username-input' type='text' placeholder='Enter your username here...' autocomplete='off'>
-                        <input id='password-input' type='password' placeholder='Enter your password here...' autocomplete='off'>
+                        <input id='username-input' type='text' placeholder='Username' autocomplete='off'>
+                        <br />
+                        <input id='password-input' type='password' placeholder='Password' autocomplete='off'>
+                        <div class="g-recaptcha" data-sitekey="6Le3OwMnAAAAAMmav7yAhKNDA1nH0wtfEDnx4u3n"></div>
                         <button id='login-button' onclick='login()'>Login</button>
+                        <button id='register-button' onclick='register()'>Register</button>
                     </div>
                 </div>
             </div>
             <div id='keys-panel' class='panel'>
                 <span class='close' id='keys-close'>&times;</span>
-                <h2>Manage 3rd Party Provider Secrets</h2>
-                <form id='keys-form' onsubmit='event.preventDefault(); storeKeys();'>
+                <h2>Manage Service Keys</h2>
+                <form id='keys-form' onsubmit='event.preventDefault(); storeServiceKeys();'>
                     <label for='openai-key-input'>OpenAI API Key:</label>
                     <input id='openai-key-input' type='password' placeholder='Enter your OpenAI API Key here...' autocomplete='off'>
+                    <br /><br />
                     <label for='github-token-input'>GitHub OAuth Token:</label>
                     <input id='github-token-input' type='password' placeholder='Enter your GitHub OAuth Token here...' autocomplete='off'>
+                    <br /><br />
                     <button id='store-keys-button' type='submit'>Store Keys</button>
                 </form>
             </div>
-            <button id='keys-button' onclick='showKeysPanel()'>Manage Keys</button>
-            <main class='chat-app'>
+            <button id='keys-button' onclick='showKeysPanel()'>Manage Service Keys</button>
+            <main id='chat-app'>
                 <section id='chat-output'></section>
             </main>
             <footer>

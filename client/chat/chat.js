@@ -37,6 +37,8 @@ function selectAll() {
 
 function showKeysPanel() {
     keysPanel.style.display = "block";
+    keysLink.style.display = "none";
+    chatForm.style.display = "none";
 }
 
 function sendMessage() {
@@ -54,11 +56,11 @@ function sendMessage() {
 }
 
 const sendPostRequest = async (functions) => {
-    const response = await fetch("http://localhost:5000/chat", {
+    const token = localStorage.getItem('token'); // update the token variable in memory so if it's changed in local storage, it's changed in memory
+    const response = await fetch("/api/chat", {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": apiKey,
             "Authorization": "Bearer " + token
         },
         body: JSON.stringify({ "messages": chatContext, "model": "gpt-4-0613", "functions": functions })
@@ -68,7 +70,8 @@ const sendPostRequest = async (functions) => {
     if (data.error && data.error === 'Invalid token') {
         loginModal.style.display = 'block'; // Display the login modal when the token is invalid
         loginForm.style.display = 'block'; // Display the login form when the token is invalid
-        document.getElementById('login-button').style.display = 'block'; // Ensure that the login button is displayed
+        document.getElementById('login-button').style.display = 'inline'; // Ensure that the login button is displayed
+        document.getElementById('register-button').style.display = 'inline'; // Ensure that the register button is displayed
     } else {
         if (data.messages && data.messages.length > 0) {
             const newMessages = data.messages.slice(chatContext.length);

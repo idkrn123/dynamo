@@ -6,12 +6,12 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from ast import literal_eval
-from .chat_utils import chat_completion_request
-from .github_manager import GithubManager
-from .web_scraper import browse_web
+from .openai_handler import chat_completion_request, APIKeyError, HTTPError
+from .functions.github_functions import GithubManager
+from .functions.web_functions import browse_web
 from .models import User, ApiKey, db
-from .auth import auth
-from .billing import billing, charge_user, add_money, get_balance
+from .routes.auth import auth
+from .routes.billing import billing
 
 app = Flask(__name__)
 CORS(app)
@@ -48,11 +48,24 @@ for function in available_functions:
 @app.route('/chat', methods=['POST'])
 def chat():
     api_key = request.headers.get('X-API-KEY')
-    if not api_key:
-        return jsonify({'error': 'Missing API key'}), 400
-    key = ApiKey.query.filter_by(key=api_key).first()
-    if not key:
-        return jsonify({'error': 'Invalid API key'}), 401
+    if not api_key and 'Authorization' not in request.headers:
+        return jsonify({'error': "API key or user token must be provided."}), 400
+
+    if api_key:
+        api_key_user = User.query.filter_by(apikeys=api_key).first()
+        if 'Authorization' in request.headers:
+            token_user = User.verify_auth_token(request.headers.get('Authorization'))
+            if api_key_user != token_user:
+                return jsonify({'error': 'API key and token were both provided and users do not match...?'}), 418 # dude you broke it so badly it became a teapot
+        user = api_key_user
+    else:
+        if 'Authorization' not in request.headers:
+            return jsonify({'error': "API key or user token must be provided."}), 400
+        try:
+            token_user = User.verify_auth_token(request.headers.get('Authorization'))
+        except:
+            return jsonify({'error': "Invalid token"}), 401
+        user = token_user
 
     data = request.get_json()
     if 'messages' not in data:
@@ -73,9 +86,14 @@ def chat():
                 return jsonify({'error': f'Function {function_name} not found'}), 404
             functions.append(available_functions_dict[function_name])
 
-    user = User.verify_auth_token(request.headers.get('Authorization'))
     if not user:
-        return jsonify({'error': 'Invalid token'}), 401
+        if api_key:
+            return jsonify({'error': 'Invalid API key'}), 401
+        else:
+            if 'Authorization' not in request.headers:
+                return jsonify({'error': "No auth data provided"}), 401
+            else:
+                return jsonify({'error': "Invalid token"}), 401
     # get api key from database
     if user.openai_api_key:
         openai_api_key = user.openai_api_key
@@ -91,10 +109,17 @@ def chat():
     github_manager = GithubManager(github_oauth_token)
 
     while True:
-        if functions:
-            response = chat_completion_request(messages=messages, model=model, functions=functions, openai_api_key=openai_api_key)
-        else:
-            response = chat_completion_request(messages=messages, model=model)
+        try:
+            if functions:
+                response = chat_completion_request(messages=messages, model=model, functions=functions, openai_api_key=openai_api_key)
+            else:
+                response = chat_completion_request(messages=messages, model=model, openai_api_key=openai_api_key)
+        except APIKeyError as e:
+            return jsonify({'error': str(e)}), 401
+        except HTTPError as e:
+            return jsonify({'error': str(e)}), 500
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
         response_json = response.json()
         try:
             assistant_message = response_json['choices'][0]['message']
@@ -125,7 +150,7 @@ def chat():
             break
 
         price = 0.01 * (len(messages) - 1)
-        if not charge_user(key.user_id, price):
+        if not billing.charge_user(user, price):
             return jsonify({'error': 'Insufficient balance'}), 402
         
     return jsonify({'messages': messages}), 200

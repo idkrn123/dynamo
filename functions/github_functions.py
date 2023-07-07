@@ -1,10 +1,3 @@
-import os
-
-from github import Github, GithubException
-# handle dotenv for environment variables - github access token
-from dotenv import load_dotenv
-load_dotenv()
-
 from github import Github, GithubException
 
 class GithubManager:
@@ -43,7 +36,7 @@ class GithubManager:
                 files.append(file_content.path)
         return "\n".join(files)
 
-    def delete_file(self, repo_name, filename, msg="remove file", branch="main"):
+    def delete_file(self, repo_name, filename, msg, branch="main"):
         user = self.g.get_user()
         if repo_name not in [repo.name for repo in user.get_repos()]:
             return f"Error: Repository '{repo_name}' does not exist."
@@ -63,7 +56,7 @@ class GithubManager:
         except GithubException as e:
             return str(e)
 
-    def write_file(self, repo_name, filename, content, msg="write file", branch="main"):
+    def write_file(self, repo_name, filename, content, msg, branch="main"):
         user = self.g.get_user()
         if repo_name not in [repo.name for repo in user.get_repos()]:
             return f"Error: Repository '{repo_name}' does not exist."
@@ -79,7 +72,7 @@ class GithubManager:
 
         return f"Successfully wrote to {filename} in repository '{repo_name}' branch '{branch}'"
 
-    def rename_file(self, repo_name, old_filename, new_filename, msg="rename file", branch="main"):
+    def rename_file(self, repo_name, old_filename, new_filename, msg, branch="main"):
         user = self.g.get_user()
         if repo_name not in [repo.name for repo in user.get_repos()]:
             return f"Error: Repository '{repo_name}' does not exist."

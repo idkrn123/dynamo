@@ -30,7 +30,7 @@ body {
     background-color: #2979ff;
     color: white;
 }
-.chat-app {
+#chat-app {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -72,7 +72,7 @@ body {
     padding: 10px;
     box-shadow: 0px -2px 10px 0px rgba(0, 0, 0, 0.15);
     margin: 0 auto;
-    text-align: center;
+    text-align: left;
 }
 
 #chat-output {
@@ -80,7 +80,9 @@ body {
 }
 
 #user-input {
-    width: 80%;
+    min-width: 10%;
+    max-width: 70%;
+    width: 100%;
     padding: 10px;
     color: white;
     outline: none;
@@ -97,23 +99,27 @@ body {
     border: none;
     border-radius: 20px;
     padding: 10px 20px;
-    margin-left: 15px;
+    margin-left: 2%;
     cursor: pointer;
 }
 
 #command-list {
+    text-align: right;
     color: white;
     display: inline flow-root;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
+    width: 15%;
     max-width: max-content;
     vertical-align: middle;
-    margin-left: 15px;
+    margin-left: 2%;
+    position: absolute;
 }
 
 #command-list p {
+    text-align: center;
     margin: 0;
     padding: 0;
     font-size: 12px;
@@ -126,9 +132,12 @@ body {
     background-color: #000000;
     border: 1px solid #2979ff;
     border-radius: 10px;
-    padding: 10px;
     color: white;
     outline: none;
+    padding: 10px;
+    margin: 5px;
+    width: 100%;
+    max-width: max-content;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -166,14 +175,29 @@ body {
 
 /* Modal Content/Box */
 .modal-content {
-    background-color: #fefefe;
-    position: fixed; /* Fix the position of the modal */
-    top: 50%; /* Center the modal vertically */
-    left: 50%; /* Center the modal horizontally */
-    transform: translate(-50%, -50%); /* Adjust the position of the modal */
+    text-align: center;
+    background-color: #242424; /* changed from #171717 to match panel */
+    color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    border: none; /* removed border */
+    width: 40%;
+    height: 40%;
+}
+
+.modal-content input {
+    background-color: #171717;
+    color: white;
+    border: 1px solid #2979ff;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px;
+    width: 100%;
+    max-width: max-content;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* The Close Button */
@@ -194,11 +218,14 @@ body {
 /* The Panel */
 .panel {
     display: none; /* Hidden by default */
-    background-color: #fefefe;
+    background-color: #242424;
+    color: white;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    text-align: center;
+    border: 1px solid #2979ff;
+    width: 35%;
+    height: 35%;
 }
 
 #keys-button {
@@ -208,5 +235,13 @@ body {
     border-radius: 20px;
     padding: 10px 20px;
     margin: 15px;
+    max-width: max-content;
     cursor: pointer;
+}
+
+.g-recaptcha {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
 }
