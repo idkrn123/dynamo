@@ -15,4 +15,4 @@ def test_apikeys_list():
     apikey_file_path = os.path.join(dir_path, 'apikey.txt')
     with open(apikey_file_path, 'r') as file:
         apikey = file.read()
-    assert {'id': 1, 'key': apikey[-4:]} in response.json()['apikeys']
+    assert response.json()['apikeys'][-1]['key'] == apikey[-4:]

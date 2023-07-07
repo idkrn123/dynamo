@@ -26,10 +26,11 @@ def register():
     data = request.get_json()
     if not data or 'username' not in data or 'password' not in data:
         abort(400, 'Missing username or password')
-    if 'recaptcha' not in data and not os.getenv('FLASK_ENV') == 'development':
-        abort(400, 'Missing reCAPTCHA')
-    if not verify_recaptcha(data['recaptcha']) and not os.getenv('FLASK_ENV') == 'development':
-        abort(400, 'Invalid reCAPTCHA')
+    if ('recaptcha' not in data) or (not verify_recaptcha(data['recaptcha'])):
+        if not os.getenv('FLASK_ENV') == 'development':
+            abort(400, 'Invalid reCAPTCHA')
+        else:
+            print('Invalid reCAPTCHA excepted due to development environment')
     if not re.match(r'^[a-zA-Z0-9_]+$', data['username']):
         abort(400, 'Username must only contain letters, numbers and underscores')
     if len(data['username']) < 3 or len(data['username']) > 20:
@@ -50,10 +51,11 @@ def register():
 @auth.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    if not data or 'username' not in data or 'password' not in data or 'recaptcha' not in data:
-        abort(400, 'Missing username, password or recaptcha')
-    if not verify_recaptcha(data['recaptcha']):
-        abort(400, 'Invalid reCAPTCHA')
+    if ('recaptcha' not in data) or (not verify_recaptcha(data['recaptcha'])):
+        if not os.getenv('FLASK_ENV') == 'development':
+            abort(400, 'Invalid reCAPTCHA')
+        else:
+            print('Invalid reCAPTCHA excepted due to development environment')
     user = User.query.filter_by(username=data['username']).first()
     if not user or not check_password_hash(user.password, data['password']):
         abort(401, 'Could not verify')

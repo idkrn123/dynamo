@@ -1,5 +1,6 @@
-__pycache__
 .env
-apikey.txt
-chat.sh
-token.txt
+__pycache__
+testing/username.txt
+testing/password.txt
+testing/apikey.txt
+testing/token.txt
