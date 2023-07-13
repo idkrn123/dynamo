@@ -101,16 +101,18 @@ def store_keys():
     try:
         if 'openai_api_key' in data:
             if not re.match(r'^sk-', data['openai_api_key']):
-                user.openai_api_key_updated_at = datetime.utcnow()
+                return jsonify({'message': 'Invalid OpenAI API key'}), 400
             else:
                 user.openai_api_key = data['openai_api_key']
                 user.openai_api_key_updated_at = datetime.utcnow()
+                print('OpenAI API key updated to {}'.format(data['openai_api_key']))
         if 'github_oauth_token' in data:
             if not re.match(r'^[a-z0-9]+$', data['github_oauth_token']):
-                user.github_oauth_token_updated_at = datetime.utcnow()
+                return jsonify({'message': 'Invalid GitHub OAuth token'}), 400
             else:
                 user.github_oauth_token = data['github_oauth_token']
                 user.github_oauth_token_updated_at = datetime.utcnow()
+                print('GitHub OAuth token updated to {}'.format(data['github_oauth_token']))
         db.session.commit()
         return jsonify({'message': 'Keys updated successfully'})
     except Exception as e:

@@ -136,6 +136,8 @@ def chat():
             function_arguments = assistant_message['function_call']['arguments']
 
             if hasattr(github_manager, function_name):
+                if github_oauth_token is None:
+                    return jsonify({'error': 'User has no GitHub OAuth token'}), 401
                 function = getattr(github_manager, function_name)
             elif function_name in FUNCTION_MAP:
                 function = FUNCTION_MAP[function_name]
