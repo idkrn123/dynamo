@@ -55,6 +55,7 @@ document.getElementById('keys-close').onclick = function() {
     keysPanel.style.display = "none";
     keysLink.style.display = "block";
     chatApp.style.display = "block";
+    chatForm.style.display = "block";
 }
 
 async function login() {

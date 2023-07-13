@@ -36,6 +36,7 @@ function selectAll() {
 }
 
 function showKeysPanel() {
+    chatApp.style.display = "none";
     keysPanel.style.display = "block";
     keysLink.style.display = "none";
     chatForm.style.display = "none";
@@ -67,11 +68,14 @@ const sendPostRequest = async (functions) => {
     });
 
     const data = await response.json();
-    if (data.error && data.error === 'Invalid token') {
+    if (data.msg && data.msg === 'Token has expired') {
         loginModal.style.display = 'block'; // Display the login modal when the token is invalid
         loginForm.style.display = 'block'; // Display the login form when the token is invalid
         document.getElementById('login-button').style.display = 'inline'; // Ensure that the login button is displayed
         document.getElementById('register-button').style.display = 'inline'; // Ensure that the register button is displayed
+    } else if (data.error && data.error === 'Missing OpenAI API key') {
+        showKeysPanel();
+        printMessage('assistant-message', 'Please enter your OpenAI API key in the "OpenAI API Key" field.');
     } else {
         if (data.messages && data.messages.length > 0) {
             const newMessages = data.messages.slice(chatContext.length);
@@ -107,7 +111,9 @@ const sendPostRequest = async (functions) => {
         }
     }
     if (data.error) {
-        printMessage('assistant-message', data.error);
+        if (data.error !== 'Missing OpenAI API key') {
+            printMessage('assistant-message', data.error);
+        }
     }
 }
 

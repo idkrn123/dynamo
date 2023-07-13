@@ -10,7 +10,7 @@ def test_keys_post():
         token = file.read()
     url = "http://localhost:5000/auth/keys"
     headers = {'Content-Type': 'application/json', 'Authorization': f'Bearer {token}'}
-    data = {'openai_api_key': 'sk-afakeopenaikey', 'github_oauth_token': 'afakegithubkey'}
+    data = {'openai_api_key': 'sk-afakeopenaikey', 'github_oauth_token': 'github_pat_afakegithubkey'}
     response = requests.post(url, headers=headers, data=json.dumps(data))
     assert response.status_code == 200
     assert response.json()['message'] == 'Keys updated successfully'
