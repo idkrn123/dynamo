@@ -9,13 +9,12 @@ from .functions.github_functions import GithubManager
 from .functions.web_functions import browse_web
 from .models import User, ApiKey, db
 from .routes.auth import auth
-from .routes.billing import billing, charge_user, InsufficientBalance
+from .routes.billing import charge_user
 
 app = Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 app.register_blueprint(auth, url_prefix='/auth')
-app.register_blueprint(billing, url_prefix='/billing')
 db.init_app(app)
 
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
