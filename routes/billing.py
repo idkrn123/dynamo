@@ -1,8 +1,5 @@
-from flask import Blueprint, request
-from flask_login import login_required, current_user
-from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import NoResultFound
-from werkzeug.exceptions import NotFound, BadRequest, InternalServerError
+from werkzeug.exceptions import BadRequest, InternalServerError
 from ..models import User, db
 from .auth import UserNotFound
 
@@ -44,10 +41,3 @@ def get_balance(user_id):
         raise UserNotFound('User not found')
     except Exception as e:
         raise InternalServerError('Error getting balance: {}'.format(e))
-
-billing = Blueprint('billing', __name__)
-
-@billing.route('/balance', methods=['GET'])
-@login_required
-def balance():
-    return {'balance': get_balance(current_user.id)}
