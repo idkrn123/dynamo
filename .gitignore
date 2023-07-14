@@ -1,2 +1,6 @@
-__pycache__
 .env
+__pycache__
+testing/username.txt
+testing/password.txt
+testing/apikey.txt
+testing/token.txt
