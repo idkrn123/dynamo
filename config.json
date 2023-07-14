@@ -1,0 +1,12 @@
+{
+    "billing": {
+        "enabled": true,
+        "cost_per_1k": 0.01,
+        "cost_per_function": 0.01
+    },
+    "moderation":
+    {
+        "enabled": true,
+        "type": "openai"
+    }
+}

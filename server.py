@@ -117,8 +117,9 @@ def chat():
             messages.append(assistant_message)
             break
 
-        price = 0.01 * (len(messages) - 1)
-        charge_user(user.id, price)
+        # we'll do this later and add stripe or something. open an issue if you want this faster i guess
+        # price = 0.01 * (len(messages) - 1)
+        # charge_user(user.id, price)
 
     return jsonify({'messages': messages}), 200
 
