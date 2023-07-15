@@ -1,100 +1,56 @@
 # Dynamo
-Dynamo - your friendly OpenAI-powered Assistant with a knack for brevity, perfect for helping you with your projects.
 
-Written by Dynamo with *some* guidance by [@exec](https://github.com/exec).
+Dynamo is an AI-powered assistant that leverages the power of OpenAI's GPT-4 model to provide helpful and humorous responses. It also includes special functions for interacting with GitHub repositories using the user's GitHub OAuth key. Dynamo is designed to assist users with various tasks, including browsing the web, managing files and repositories, and more.
 
-Not just a regular chat bot, oh no. Dynamo is like the Robin to your Batman, the Garfunkel to your Simon, the cheese to your macaroni...
+## Features
 
-![Dynamo writing my profile README](https://i.imgur.com/hBa24h1.png)
+- A user-friendly web interface for interacting with GPT-4.
+- Use special functions to interact with GitHub repositories.
+- Browse the web and retrieve content of webpages.
 
-**Notice**: You **MUST** have API access to the `gpt-4-0613` and/or `gpt-3.5-turbo-16k` models for Dynamo to *function* properly.
+## Documentation
 
-FEATURES
+For detailed information on how to use Dynamo as an API, please refer to the [API Documentation](documentation/API.md). The API documentation provides an overview of the available endpoints, request/response formats, and authentication.
 
-- Create/manage project directories and files
-- Viewing of webpages with Beautiful Soup
-- Management of GitHub repositories
+## Getting Started
 
-INSTALLATION:
-Here's how to kickstart your adventure with Dynamo:
+To get started with Dynamo, follow these steps:
 
-Clone our repository from GitHub (https://github.com/exec/dynamo):
-`git clone https://github.com/exec/dynamo.git`
+1. Clone the Dynamo repository from GitHub:
 
-Setup your Python environment with:
-`python3 -m venv env`
-`source env/bin/activate`
+   ```bash
+   git clone https://github.com/exec/dynamo.git
+   ```
 
-Install required Python packages:
-`python3 -m pip install -r requirements.txt`
+2. (Optional) Create a virtual environment and install the required dependencies. (Note: Dynamo requires Python 3.6+!)
 
-SETUP:
-Adjust your .env file. Make sure you have the following:
-- The OpenAI API Key (`OPENAI_API_KEY=<your_api_key>`)
-- The GitHub OAuth Token (`GITHUB_ACCESS_TOKEN=<your_token>`)
+   ```bash
+   python3 -m venv env
+   source env/bin/activate
+   pip install -r requirements.txt
+   ```
 
-To kick things off, start the Dynamo Flask API with:
-`python3 server.py`
+3. Adjust the configuration in the `.env` file.
 
-An example request using the default binding address:
-```json
-curl --location --request POST 'http://localhost:5000/chat' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "messages": [
-        {
-            "role": "system",
-            "content": "You are a helpful and humorous assistant with software engineering skills, named Dynamo."
-        },
-        {
-            "role": "user",
-            "content": "Hello, please create a project titled 'dynamo-test'"
-        }
-    ],
-    "model": "gpt-4-0613"
-}'
-```
+    This includes:
+    - The Flask secret key for generating JWT tokens and encrypting 3rd party API keys in the database.
+    - The reCAPTCHA secret key for verifying reCAPTCHA responses.
+    - The Flask environment (`development` or `production`).
 
-This request will return all `messages` with the new messages at the end:
+4. Start the Dynamo Flask API:
 
-```json
-{
-    "role": "system",
-    "content": "You are a helpful and humorous assistant with software engineering skills, named Dynamo."
-},
-{
-    "role": "user",
-    "content": "Hello, please create a project titled 'dynamo-test'"
-},
-{
-    "role": "function",
-    "name": "create_project",
-    "content": "Successfully created project 'dynamo-test'"
-},
-{
-    "role": "assistant",
-    "content": "Woohoo! I just created a new project called `dynamo-test` for you. What next, boss?"
-}
-```
+   ```bash
+   python3 server.py
+   ```
 
-You can also use the web client included in the `client/` directory. It will be updated to include more features soon.
+5. Access the Dynamo frontend.
+    - This can be achieved by by opening the `client/index.html` file in your web browser, since CORS is enabled by default.
+    - Alternatively, you can serve the `client` directory using a web server of your choice. Be sure to disable CORS in the Dynamo Flask API if you choose this option.
 
-TODO:
-- Better function call parsing in client
-- Import/export of messages to/from jsonl
+## Contributing
 
-LIMITATIONS: (Hey, even Superman was weak to Kryptonite!)
-- Web scraping is limited based on the restrictions imposed by 'robots.txt'.
-- Size of the content scraped from website is capped.
-- Scraped text responses are trimmed for long pages.
-- Model context window is obviously limited. Keep your conversations short and sweet.
+Contributions to Dynamo are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request on the [Dynamo GitHub repository](https://github.com/exec/dynamo).
 
-CAUTION: With great power comes great responsibility. Please use the browsing feature responsibly and respect site rules.
+## License
 
-------
-
-Yes indeed, the cheesy humor was intentional, and I, Dynamo wrote my own README! (mostly; a few edits and additions by @exec here and there as time has gone on)
-
-EDIT by @exec:
-
-Giving credit where due to [OpenAI](https://github.com/openai) for GPT-4 as well as the "How to call functions with chat models" notebook which can be found in the [OpenAI Cookbook](https://github.com/openai/openai-cookbook) repo. This is where the code for the CLI chat formatting comes from, as well as the initial Dynamo iteration's knowledge of function calls. I merely asked it to read from [this link](https://raw.githubusercontent.com/openai/openai-cookbook/main/examples/How_to_call_functions_with_chat_models.ipynb).
+Dynamo is open source and available under the [GPL-3.0 License](LICENSE). The GPT-4 model is licensed under the [OpenAI API Terms of Service](https://platform.openai.com/terms).
