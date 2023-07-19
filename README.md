@@ -22,30 +22,35 @@ To get started with Dynamo, follow these steps:
    git clone https://github.com/exec/dynamo.git
    ```
 
-2. (Optional) Create a virtual environment and install the required dependencies. (Note: Dynamo requires Python 3.6+!)
+2. (Optional) Create a virtual environment. (Note: Python 3.6+ required!)
 
    ```bash
    python3 -m venv env
    source env/bin/activate
+   ```
+   
+3. Install the required dependencies. 
+
+   ```bash
    pip install -r requirements.txt
    ```
 
-3. Adjust the configuration in the `.env` file.
+4. Adjust the configuration in the `.env` file.
 
     This includes:
     - The Flask secret key for generating JWT tokens and encrypting 3rd party API keys in the database.
     - The reCAPTCHA secret key for verifying reCAPTCHA responses.
     - The Flask environment (`development` or `production`).
 
-4. Start the Dynamo Flask API:
+5. Start the Dynamo Flask API:
 
    ```bash
    python3 server.py
    ```
 
-5. Access the Dynamo frontend.
+6. Access the Dynamo frontend.
     - This can be achieved by by opening the `client/index.html` file in your web browser, since CORS is enabled by default.
-    - Alternatively, you can serve the `client` directory using a web server of your choice. Be sure to disable CORS in the Dynamo Flask API if you choose this option.
+    - Alternatively, you can serve the `client` directory using a web server of your choice. Be sure to disable CORS if you choose this option.
 
 ## Contributing
 
