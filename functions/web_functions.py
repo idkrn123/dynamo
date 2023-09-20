@@ -4,7 +4,7 @@ from urllib.parse import urlparse, urljoin
 from urllib.robotparser import RobotFileParser
 
 class WebScraper:
-    def __init__(self, max_page_size=128*1024, max_text_length=10000):
+    def __init__(self, max_page_size=10*1024, max_text_length=10000):
         self.max_page_size = max_page_size
         self.max_text_length = max_text_length
         self.session = requests.Session()
@@ -32,11 +32,12 @@ class WebScraper:
         links = [urljoin(base_url, link.get('href')) for link in soup.find_all('a')]
         return links
 
+
     def scrape_web(self, url):
         parsed_url = urlparse(url)
         if not parsed_url.scheme or not parsed_url.netloc:
             return 'Error: Invalid URL'
-        
+
         robots_url = urljoin(url, '/robots.txt')
         rp = RobotFileParser()
         rp.set_url(robots_url)
@@ -44,17 +45,13 @@ class WebScraper:
 
         if not rp.can_fetch('*', parsed_url.path):
             return 'Error: does not allow web scraping: ' + url
-        
+
         response = self.get_text_content(url)
         if response.startswith('Error: '):
             return response
-        
-        soup = BeautifulSoup(response, 'html.parser')
-        links = self.parse_links(url, soup)
-        return {
-            'content': response[:self.max_text_length],
-            'links': links,
-        }
+
+        return response[:self.max_text_length]
+
 
 def browse_web(url):
     scraper = WebScraper()

@@ -86,11 +86,9 @@ class GithubManager:
             contents = repo.get_contents(filename, ref=branch)
             repo.update_file(contents.path, msg, content, contents.sha, branch=branch)
             return f"Successfully wrote to {filename} in repository '{repo_name}' branch '{branch}'"
-        except GithubException.NotFoundError:
+        except GithubException as e:
             repo.create_file(filename, msg, content, branch=branch)
             return f"Successfully created {filename} in repository '{repo_name}' branch '{branch}'"
-        except GithubException as e:
-            print(f"Error writing file: {e}")
 
     def rename_file(self, repo_name, old_filename, new_filename, msg, branch="main"):
         try:
@@ -187,7 +185,7 @@ class GithubManager:
         try:
             repo = self._get_repo(repo_name)
             open_issues = repo.get_issues(state='open')
-            return [f"{issue.title} ({issue.number})" for issue in open_issues]
+            return ", ".join([f"{issue.title} ({issue.number})" for issue in open_issues])
         except GithubException as e:
             print(f"Error listing open issues: {e}")
 
