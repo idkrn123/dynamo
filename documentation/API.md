@@ -299,26 +299,6 @@ X-API-KEY: your_api_key
 
 Note: The `functions` parameter is optional. The response will contain all messages in the conversation, it is the client's responsibility to handle the messages appropriately. Failure to do so may result in some very strange and... repetitive... conversations.
 
-## Billing
-
-The billing endpoints allow you to manage user balances and perform transactions.
-
-### Get Balance
-
-**Endpoint:** `/billing/balance`
-
-**Method:** `GET`
-
-**Request Body:** None
-
-**Response:**
-
-```json
-{
-  "balance": 100.0
-}
-```
-
 ## Error Handling
 
 In case of errors, the API will return an appropriate HTTP status code along with an error message in the response body.
