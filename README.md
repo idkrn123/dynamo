@@ -1,4 +1,4 @@
-Note: v2 will be a much larger release, will be withheld until just before release, and will use OpenAI's Python API v1. It will be delayed indefinitely until such a point.
+Note: v2 is in development, but development is not currently being tracked on GitHub as this project is involved in some business. An open-source version will be released here later (estimating January or February 2024)
 
 # Dynamo
 
