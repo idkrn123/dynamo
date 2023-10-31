@@ -245,3 +245,8 @@ body {
     align-items: center;
     margin: 10px 0;
 }
+
+#total-tokens {
+    color: white;
+    text-align: center;
+}

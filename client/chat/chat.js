@@ -107,6 +107,9 @@ const sendPostRequest = async (functions) => {
                     });
                     printMessage('function-message', message);
                 }
+                if (data.total_tokens !== undefined) {
+                    document.getElementById('total-tokens').textContent = `Tokens used: ${data.total_tokens}`;
+                }
             });
         }
     }

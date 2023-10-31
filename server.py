@@ -94,6 +94,7 @@ def chat():
             return jsonify({'error': str(e)}), 500
 
         assistant_message = response_object.get('choices', [{}])[0].get('message')
+        total_tokens = response_object.get('usage', {}).get('total_tokens', 0)
         if not assistant_message:
             error = response_object.get('error', {}).get('message', 'unknown')
             return jsonify({'openai-server-error': f'Error: {error}'}), 500
@@ -121,7 +122,7 @@ def chat():
         # price = 0.01 * (len(messages) - 1)
         # charge_user(user.id, price)
 
-    return jsonify({'messages': messages}), 200
+    return jsonify({'messages': messages, 'total_tokens': total_tokens}), 200
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=False)

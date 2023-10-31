@@ -1,3 +1,5 @@
+Note: v2 will be a much larger release, will be withheld until just before release, and will use OpenAI's Python API v1. It will be delayed indefinitely until such a point.
+
 # Dynamo
 
 Dynamo is an AI-powered assistant that leverages the power of OpenAI's GPT-4 model to provide helpful and humorous responses. It also includes special functions for interacting with GitHub repositories using the user's GitHub OAuth key. Dynamo is designed to assist users with various tasks, including browsing the web, managing files and repositories, and more.
