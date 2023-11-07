@@ -1,4 +1,10 @@
-Note: v2 is in development, but development is not currently being tracked on GitHub as this project is involved in some business. An open-source version will be released here later (estimating January or February 2024)
+## Dynamo is no longer being updated.
+
+OpenAI's new [Assistants API](https://platform.openai.com/docs/assistants/overview) handles about 3/4 of what Dynamo was intended to handle. I plan on building a much smaller project around this new API in the near future, which will be even more capable than Dynamo v2 was planned to ever be. (the [128k GPT-4 model](https://openai.com/blog/new-models-and-developer-products-announced-at-devday) will help immensely with this!)
+
+Big thanks to OpenAI for constantly innovating, even though it makes some of my projects pointless from time to time 😆
+
+---
 
 # Dynamo
 
